@@ -7,8 +7,8 @@
             color="blue lighten-3"
         >
             <v-card-text class="display-2 text-xs-center pa-5">
-                <div v-if="group[0]">{{ activity }} with {{ groupParsed }}!</div>
-                <div v-if="!group[0]">Looks like you've had coffee with everybody already!</div>
+                <div v-if="notEmpty">{{ activity }} with {{ groupParsed }}!</div>
+                <div v-if="!notEmpty">Looks like you've had coffee with everybody already!</div>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -49,7 +49,16 @@ export default {
             }
         },
         phrase() {
-            return this.group[0] ? 'Sounds good!' : 'Lunch it is!'
+            return this.notEmpty ? 'Sounds good!' : 'Lunch it is!'
+        },
+        notEmpty() {
+            if (!!this.group) {
+                if (this.group[0]) {
+                    return true
+                } else {
+                    return false
+                }
+            }
         }
     }
 }
