@@ -41,7 +41,7 @@ export default {
                     this.group = null
                 }
             } else {
-                let rand = Math.floor(Math.random() * 3) + 3
+                let rand = Math.floor(Math.random() * 3) + 2
                 let lunchGroup = this.getCoworkers(rand)
                 this.group = lunchGroup
                 for (let coworker of lunchGroup) {

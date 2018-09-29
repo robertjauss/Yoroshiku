@@ -7,7 +7,7 @@
             color="blue lighten-3"
         >
             <v-card-text class="display-2 text-xs-center pa-5">
-                <div v-if="notEmpty">{{ activity }} with {{ groupParsed }}!</div>
+                <div v-if="notEmpty">{{ user }}, you should {{ activity }} with {{ groupParsed }}!</div>
                 <div v-if="!notEmpty">Looks like you've had coffee with everybody already!</div>
             </v-card-text>
             <v-card-actions>
@@ -49,9 +49,9 @@ export default {
              */
             if (this.notEmpty) {
                 if (this.group.length == 1) {
-                    return 'Grab a coffee'
+                    return 'grab a coffee'
                 } else {
-                    return 'Go to lunch'
+                    return 'go to lunch'
                 }
             }
         },
@@ -69,6 +69,9 @@ export default {
                     return false
                 }
             }
+        },
+        user() {
+            return this.localStorage.name
         }
     }
 }
