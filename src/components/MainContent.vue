@@ -73,11 +73,19 @@ export default {
                  * Checks the length of the available list and compares it the the random number passed in,
                  * if there aren't enough coworkers, it slices the full list and adds enough coworkers to
                  * match the number required.
+                 * 
+                 * If the length of available is 0, e.g. user has had lunch with everybody already,
+                 * then switches the available list to match allAvailable to avoid matching with more
+                 * than the first few elements of array
                  */
                 if (available.length < n) {
-                    let diff = n - available.length
-                    for (let coworker of allAvailable.slice(0, diff)) {
-                        available.push(coworker)
+                    if (available.length > 0) {
+                        let diff = n - available.length
+                        for (let coworker of allAvailable.slice(0, diff)) {
+                            available.push(coworker)
+                        }
+                    } else {
+                        available = allAvailable
                     }
                 }
             }
