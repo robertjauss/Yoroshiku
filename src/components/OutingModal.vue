@@ -23,7 +23,11 @@ export default {
     props: ['modal', 'closeModal', 'group'],
     computed: {
         groupParsed() {
-            if (!!this.group) {
+            /**
+             * Checks that this.group is truthy before continuing,
+             * then formats the list of group members into a huamn readable format
+             */
+            if (this.notEmpty) {
                 if (this.group.length > 1) {
                     let stringify = ""
                     for (let person of this.group) {
@@ -40,7 +44,10 @@ export default {
             }
         },
         activity() {
-            if (!!this.group) {
+            /**
+             * Sets the leading phrase of modal to match activity
+             */
+            if (this.notEmpty) {
                 if (this.group.length == 1) {
                     return 'Grab a coffee'
                 } else {
@@ -49,6 +56,9 @@ export default {
             }
         },
         phrase() {
+            /**
+             * When all staff had had coffee with user, changes phrase on 'ok' button
+             */
             return this.notEmpty ? 'Sounds good!' : 'Lunch it is!'
         },
         notEmpty() {
