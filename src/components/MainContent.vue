@@ -34,7 +34,7 @@ export default {
              */
             if (activity == 'coffee') {
                 let coworker = this.getCoworkers(1)
-                if (coworker[0]) { // Checks if null list was passed back
+                if (coworker[0]) {
                     this.group = coworker
                     this.localStorage.hadCoffee.push(coworker[0])
                 } else {
@@ -42,9 +42,13 @@ export default {
                 }
             } else {
                 let rand = Math.floor(Math.random() * 3) + 3
-                let lunchGroup = this.getCoworkers(rand)      
-                this.group = lunchGroup                       
-                this.localStorage.hadLunch.concat(lunchGroup)
+                let lunchGroup = this.getCoworkers(rand)
+                this.group = lunchGroup
+                for (let coworker of lunchGroup) {
+                    if (!this.localStorage.hadLunch.includes(coworker)) {
+                        this.localStorage.hadLunch.push(coworker)
+                    }
+                }
             }
             this.modal = true
         },
@@ -60,7 +64,22 @@ export default {
             if (n == 1) {
                 available = this.coworkers.filter(c => !this.localStorage.hadCoffee.includes(c))
             } else {
-                available = JSON.parse(JSON.stringify(this.coworkers))
+                let allAvailable = JSON.parse(JSON.stringify(this.coworkers))
+                available = this.coworkers.filter(c => !this.localStorage.hadLunch.includes(c))
+                /**
+                 * Tricky bit to check if there are not enough coworkers in the 'available' list
+                 * of coworkers the user hasn't eaten lunch with yet.
+                 * 
+                 * Checks the length of the available list and compares it the the random number passed in,
+                 * if there aren't enough coworkers, it slices the full list and adds enough coworkers to
+                 * match the number required.
+                 */
+                if (available.length < n) {
+                    let diff = n - available.length
+                    for (let coworker of allAvailable.slice(0, diff)) {
+                        available.push(coworker)
+                    }
+                }
             }
             let going = []
             for (let i = 0; i < n; i++) {
