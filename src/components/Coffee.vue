@@ -41,7 +41,3 @@ export default {
     props: ['select']
 }
 </script>
-
-<style>
-
-</style>
